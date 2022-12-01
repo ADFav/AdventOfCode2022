@@ -21,20 +21,32 @@ class BaseSolution(filename: String) {
 }
 
 class Day01(filename: String) extends BaseSolution(filename: String) {
-  import scala.collection.mutable.HashMap
+  private var currentCalories: Integer = 0
   
+  import scala.collection.mutable.ArrayBuffer
+  private var totalCalories: ArrayBuffer[Integer] = new ArrayBuffer();
+
   this.importFile()
 
   override def readLine(line: String): Unit = {
+    if (line.trim == "") {
+      this.totalCalories += (this.currentCalories)
+      this.currentCalories = 0
+    } else {
+      this.currentCalories += line.toInt
+    }
   }
-  override def part1() = {
 
-    println("Part 1: " + "")
+  override def part1() = {
+  val sortedCalories = scala.util.Sorting.stableSort(this.totalCalories).reverse
+    println("Part 1: " + sortedCalories(0))
   }
 
   override def part2() = {
+    val sortedCalories = scala.util.Sorting.stableSort(this.totalCalories).reverse
+    val result = sortedCalories(0) + sortedCalories(1) + sortedCalories(2)
 
-    println("Part 2: " + "");
+    println("Part 2: " + result);
   }
 }
 
