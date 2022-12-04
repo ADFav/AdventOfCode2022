@@ -36,8 +36,7 @@ class Day04(filename: String) extends BaseSolution(filename: String) {
     }
 
     def anyOverlap(other: Assignment): Boolean = {
-      (this.to >= other.from && this.to <= other.to) ||
-      (this.from >= other.from && this.from <= other.to)
+      this.to >= other.from && this.from <= other.to
     }
   }
 
@@ -54,31 +53,21 @@ class Day04(filename: String) extends BaseSolution(filename: String) {
   }
 
   override def part1() = {
-    var result = 0
-    // this.importFile()
-
-    assignmentPairs.foreach(assignmentPair => {
-      if (
+    return assignmentPairs
+      .count(assignmentPair => {
         assignmentPair(0).contains((assignmentPair(1))) ||
         assignmentPair(1).contains((assignmentPair(0)))
-      ) { result += 1 }
-    })
-
-    return result.toString
+      })
+      .toString()
   }
 
   override def part2() = {
-    var result = 0
-    // this.importFile()
-
-    assignmentPairs.foreach(assignmentPair => {
-      if (
+    return assignmentPairs
+      .count(assignmentPair => {
         assignmentPair(0).anyOverlap((assignmentPair(1))) ||
         assignmentPair(1).anyOverlap((assignmentPair(0)))
-      ) { result += 1 }
-    })
-
-    return result.toString
+      })
+      .toString()
   }
 }
 
