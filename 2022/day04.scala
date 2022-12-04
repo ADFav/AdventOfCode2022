@@ -30,16 +30,53 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.HashSet
 
 class Day04(filename: String) extends BaseSolution(filename: String) {
-  override def readLine(line: String): Unit = {}
+  class Assignment(var from: Int, var to: Int) {
+    def contains(other: Assignment): Boolean = {
+      this.from <= other.from && this.to >= other.to
+    }
+
+    def anyOverlap(other: Assignment): Boolean = {
+      (this.to >= other.from && this.to <= other.to) ||
+      (this.from >= other.from && this.from <= other.to)
+    }
+  }
+
+  val assignmentPairs: ArrayBuffer[Array[Assignment]] = new ArrayBuffer
+  override def readLine(line: String): Unit = {
+    val rawAssignmentPairs: Array[String] = line.split(",")
+    val assignmentPair: Array[Assignment] = rawAssignmentPairs.map(rawPair => {
+      val indices: Array[Int] = rawPair.split("-").map(_.toInt)
+
+      Assignment(indices(0), indices(1))
+    })
+
+    assignmentPairs += assignmentPair
+  }
 
   override def part1() = {
-    val result = "";
+    var result = 0
+    // this.importFile()
+
+    assignmentPairs.foreach(assignmentPair => {
+      if (
+        assignmentPair(0).contains((assignmentPair(1))) ||
+        assignmentPair(1).contains((assignmentPair(0)))
+      ) { result += 1 }
+    })
 
     return result.toString
   }
 
   override def part2() = {
-    var result = "";
+    var result = 0
+    // this.importFile()
+
+    assignmentPairs.foreach(assignmentPair => {
+      if (
+        assignmentPair(0).anyOverlap((assignmentPair(1))) ||
+        assignmentPair(1).anyOverlap((assignmentPair(0)))
+      ) { result += 1 }
+    })
 
     return result.toString
   }
