@@ -32,37 +32,27 @@ import scala.collection.mutable.HashSet
 class Day06(filename: String) extends BaseSolution(filename: String) {
   override def readLine(line: String): Unit = {}
 
-  override def part1() = {
+  def common_solution(window_width: Integer): Integer = {
     val line = this.lines(0)
 
-    var buffer: ArrayBuffer[Char] = new ArrayBuffer()
-    var index = 4
-    buffer += (line(0), line(1), line(2), line(3))
+    var buffer: ArrayBuffer[Char] =
+      line.substring(0, window_width).map(_.toChar).to(ArrayBuffer)
+    var index = window_width
 
-    while (buffer.toSet.size != 4) {
+    while (buffer.toSet.size != window_width) {
       buffer.remove(0)
       buffer += line(index)
       index += 1
     }
 
-    return index.toString
+    index
+  }
+  override def part1() = {
+    common_solution(4).toString()
   }
 
   override def part2() = {
-    val line = this.lines(0)
-
-    val chars: Array[Char] = line.substring(0, 14).map(_.toChar).toArray
-
-    var buffer: ArrayBuffer[Char] = ArrayBuffer[Char](chars: _*)
-    var index = 14
-
-    while (buffer.toSet.size != 14) {
-      buffer.remove(0)
-      buffer += line(index)
-      index += 1
-    }
-
-    return index.toString
+    common_solution(14).toString()
   }
 }
 
